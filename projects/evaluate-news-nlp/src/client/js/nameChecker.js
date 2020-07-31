@@ -14,3 +14,5 @@ function checkForName(inputText) {
 }
 
 export { checkForName }
+
+window.checkForName = checkForName;

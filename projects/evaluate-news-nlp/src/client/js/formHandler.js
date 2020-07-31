@@ -1,16 +1,27 @@
-function handleSubmit(event) {
-    event.preventDefault()
-
+function handleSubmit() {
+    console.log("In HandleSubmit");
     // check what text was put into the form field
-    let formText = document.getElementById('name').value
-    checkForName(formText)
-
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/test')
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
-    })
+    let url = document.getElementById('name').value
+    if (url) {
+        checkForName(url)
+        console.log("::: Form Submitted :::")
+        fetch("/article", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: url })
+          })
+        .then(res => res.json())
+        .then(function(res) {
+            console.log(res);
+            document.getElementById('results').innerHTML = res.toString();
+        })
+    }
+    
 }
 
 export { handleSubmit }
+
+window.handleSubmit = handleSubmit;
